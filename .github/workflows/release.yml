@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    name: Build and Upload Binaries
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Cache Go modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('cli/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Install dependencies
+        run: |
+          cd cli
+          go mod tidy
+
+      - name: Build for Linux, Mac, and Windows
+        run: |
+          cd cli
+          # Build for Linux
+          GOOS=linux GOARCH=amd64 go build -o gid-linux-amd64
+          # Build for Mac
+          GOOS=darwin GOARCH=amd64 go build -o gid-darwin-amd64
+          # Build for Windows
+          GOOS=windows GOARCH=amd64 go build -o gid-windows-amd64.exe
+
+      - name: Upload Linux Binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: gid-linux-amd64
+          path: cli/gid-linux-amd64
+
+      - name: Upload Mac Binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: gid-darwin-amd64
+          path: cli/gid-darwin-amd64
+
+      - name: Upload Windows Binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: gid-windows-amd64.exe
+          path: cli/gid-windows-amd64.exe
