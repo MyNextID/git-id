@@ -109,8 +109,10 @@ Successful verification demonstrates that the user controlled the GitHub account
 
 ## License
 
-This project is dedicated to the public domain under the [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license.  
+This project specification is dedicated to the public domain under the [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license.  
 You are free to copy, modify, distribute, and use it without restriction.
+
+This project code is licensed under the [MIT License](cli/LICENSE).
 
 ## Contributing
 
