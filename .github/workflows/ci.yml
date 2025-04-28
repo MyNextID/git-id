@@ -26,21 +26,28 @@ jobs:
           path: |
             ~/.cache/go-build
             ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-go-${{ hashFiles('cli/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
 
       - name: Install dependencies
-        run: go mod tidy
+        run: |
+          cd cli
+          go mod tidy
 
-      - name: Build
-        run: go build -v ./...
+      - name: Build CLI
+        run: |
+          cd cli
+          go build -o gid
+          ./gid --help
 
       - name: Vet
-        run: go vet ./...
+        run: |
+          cd cli
+          go vet ./...
 
       - name: Lint (optional)
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.55.2  # specify a stable version
-
+          working-directory: cli
+          version: v1.55.2
