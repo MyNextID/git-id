@@ -1,6 +1,6 @@
 # Git ID (gid) <!-- omit in toc -->
 
-**Git ID** is a simple, decentralized digital identity framework that enables users to publicly link cryptographic keys to their GitHub profiles using standard Git repositories.
+**Git ID** or **gid** is a simple, decentralized digital identity framework that enables users to publicly link cryptographic keys to their GitHub profiles using standard Git repositories.
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -18,7 +18,7 @@
 
 ## Overview
 
-Git ID binds public keys to GitHub accounts in a decentralized way, allowing third parties to verify control over a GitHub identity cryptographically.
+Git ID binds public keys to GitHub accounts, allowing third parties to verify control over a GitHub identity cryptographically.
 
 ## Create Your Git ID
 
@@ -64,17 +64,16 @@ To update your Git ID:
 
 To verify a Git ID:
 
-1. **Receive GitHub handler and a signature or encrypted file**
-   - Receive a signed or encrypted file or information along with user's GitHub handler.
+1. **Receive GitHub handler and a signature**
+   - Receive a signed or encrypted file or a response to a cryptographic challenge along with user's GitHub handler.
 
 2. **Fetch the Public Key**
    - Retrieve `gid.pem` from the user's `gid` repository
 
 3. **Perform Verification**
-   - Verify the signature or perform decryption or
-   - Perform other cryptographic verification
+   - Verify that the public key verifies the cryptographic proof
 
-Successful verification demonstrates that the user controls both the GitHub account and the associated private key.
+Successful verification demonstrates that the user controlled the GitHub account at the time of publishing the public key and didn't revoke or replace it and the associated private key at the time of cryptographic proof generation.
 
 ## Security Considerations
 
@@ -88,14 +87,14 @@ Successful verification demonstrates that the user controls both the GitHub acco
 ## Privacy Considerations
 
 - **Public Identity Binding:**  
-  Git ID explicitly binds a cryptographic identity to your GitHub username. Be aware this link may expose your identity across platforms that use your key. Use Git ID only in cases when identification is considered to be public.
+  Git ID publicly binds a cryptographic public key to your GitHub username. This link may will expose your identity across platforms that use your key.
 - **Metadata Leakage:**  
-  Verifiers or observers could correlate activities tied to your Git ID key to analyze your network, behaviour, or affiliations.
+  Verifiers or observers can correlate activities tied to your Git ID key to analyze your network, behaviour, or affiliations.
 
 ## Dependency Considerations
 
 - Git ID relies on the **availability and security of GitHub** for hosting the public key.
-- While Git ID uses Git for distribution, it currently depends on GitHub's infrastructure.
+- While Git ID uses Git for distribution, it depends on GitHub's infrastructure and identification and authentication processes.
 - Future extensions may support other Git hosting providers (e.g., GitLab, Bitbucket) and self-hosted or decentralized Git networks.
 
 ## Roadmap
@@ -126,7 +125,9 @@ Ways to contribute:
    - Report errors, ambiguities, or security concerns via GitHub Issues.
 
 3. **Submit Pull Requests:**  
+   - Before you start working on a pull request, make sure that the capability or improvement has been agreed upon in the GitHub issue.
    - Fork the repository, create a new branch, make clean commits, and open a pull request with a clear description.
+   - A single pull request MUST resolve a single open issue.
 
 4. **Follow Project Principles:**  
    - **Simplicity First:** Keep implementations minimal and understandable.
