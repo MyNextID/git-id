@@ -4,7 +4,6 @@
 
 ![Go](https://img.shields.io/badge/Go-1.22+-00ADD8?logo=go)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![CI](https://github.com/yourusername/gid/actions/workflows/ci.yml/badge.svg)
 
 ## Features
 
