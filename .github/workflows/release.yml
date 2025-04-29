@@ -37,26 +37,16 @@ jobs:
         run: |
           cd cli
           # Build for Linux
-          GOOS=linux GOARCH=amd64 go build -o gid-linux-amd64
+          GOOS=linux GOARCH=amd64 go build -o ../gid-linux-amd64
           # Build for Mac
-          GOOS=darwin GOARCH=amd64 go build -o gid-darwin-amd64
+          GOOS=darwin GOARCH=amd64 go build -o ../gid-darwin-amd64
           # Build for Windows
-          GOOS=windows GOARCH=amd64 go build -o gid-windows-amd64.exe
+          GOOS=windows GOARCH=amd64 go build -o ../gid-windows-amd64.exe
 
-      - name: Upload Linux Binary
-        uses: actions/upload-artifact@v3
+      - name: Upload binaries to GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: gid-linux-amd64
-          path: cli/gid-linux-amd64
-
-      - name: Upload Mac Binary
-        uses: actions/upload-artifact@v3
-        with:
-          name: gid-darwin-amd64
-          path: cli/gid-darwin-amd64
-
-      - name: Upload Windows Binary
-        uses: actions/upload-artifact@v3
-        with:
-          name: gid-windows-amd64.exe
-          path: cli/gid-windows-amd64.exe
+          files: |
+            gid-linux-amd64
+            gid-darwin-amd64
+            gid-windows-amd64.exe
