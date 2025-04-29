@@ -1,6 +1,6 @@
 # gid
 
-> **gid** — Tiny Git Identity toolkit for Ed25519 keys ⚡
+**gid** — Tiny Git Identity toolkit for Ed25519 keys ⚡
 
 ![Go](https://img.shields.io/badge/Go-1.22+-00ADD8?logo=go)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -86,20 +86,18 @@ gid fetch mynextid
 /main.go      CLI entry point
 ```
 
-## 🛠️ Development
+## Development
 
 ```bash
 # Install dependencies
 go mod tidy
 
 # Build CLI
-go build -o gid
+go build
 
 # Run CLI directly
 go run ./gid generate ./mykeys/id.pem
 ```
-
----
 
 ## License
 
