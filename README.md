@@ -27,20 +27,24 @@ To create your Git ID:
 1. **Create a Public Repository**  
    - Name your repository exactly `gid` on GitHub.
 
-2. **Generate an Ed25519 Keypair**  
+2. **Generate an Ed25519 Private key**  
    Use a tool such as `openssl`:
 
    ```bash
    openssl genpkey -algorithm ED25519 -out gid_private.pem
    ```
 
+   This command creates a private key and saves it to `gid_private.pem`. Store this file securely — it is your private key and must be kept confidential. You will need this key later to sign data and generate cryptographic proofs.
+
 3. **Export the Public Key in PEM Format**  
 
-   Derive and encode the public key:
+   Derive the public key from the private key and save it in PEM format:
 
    ```bash
    openssl pkey -in gid_private.pem -pubout -out gid.pem
    ```
+   This command reads your private key from gid_private.pem and writes the corresponding public key to gid.pem.
+
 
 4. **Commit and Push Your Public Key**
    - Place `gid.pem` at the root of your `gid` repository.
@@ -73,7 +77,7 @@ To verify a Git ID:
 3. **Perform Verification**
    - Verify that the public key verifies the cryptographic proof
 
-Successful verification demonstrates that the user controlled the GitHub account at the time of publishing the public key and didn't revoke or replace it and the associated private key at the time of cryptographic proof generation.
+Successful verification confirms that the user controlled the GitHub account when the public key was published and had not revoked or replaced either the public key or its associated private key at the time the cryptographic proof was generated.
 
 ## Security Considerations
 
