@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"crypto/ed25519"
+	"crypto/x509"
+	"encoding/pem"
 	"fmt"
 
 	"github.com/mynextid/git-id/identity"
@@ -18,8 +21,25 @@ var loadCmd = &cobra.Command{
 			fmt.Printf("Error loading identity: %v\n", err)
 			return
 		}
-		fmt.Printf("Loaded identity.\nPublic key: %x\n", id.PublicKey)
+		pubPEM, err := formatPublicKeyPEM(id.PublicKey)
+		if err != nil {
+			fmt.Printf("Error formatting public key: %v\n", err)
+			return
+		}
+		fmt.Printf("Loaded identity.\n \n%s", pubPEM)
 	},
+}
+
+func formatPublicKeyPEM(pub ed25519.PublicKey) (string, error) {
+	derBytes, err := x509.MarshalPKIXPublicKey(pub)
+	if err != nil {
+		return "", fmt.Errorf("failed to marshal public key: %w", err)
+	}
+	pemBlock := &pem.Block{
+		Type:  "PUBLIC KEY",
+		Bytes: derBytes,
+	}
+	return string(pem.EncodeToMemory(pemBlock)), nil
 }
 
 func init() {
