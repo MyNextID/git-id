@@ -34,6 +34,8 @@ This will build the binary from source inside the cli directory.
 
 ## Usage
 
+Use the following commands to generate public/private key pairs, view your local private keys, and inspect public keys associated with a GitHub user.
+
 ```bash
 git-id [command] [flags]
 ```
