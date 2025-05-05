@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/mynextid/gid/identity"
+	"github.com/mynextid/git-id/identity"
 	"github.com/spf13/cobra"
 )
 

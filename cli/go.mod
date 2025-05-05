@@ -1,4 +1,4 @@
-module github.com/mynextid/gid
+module github.com/mynextid/git-id
 
 go 1.24.2
 

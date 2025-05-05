@@ -9,9 +9,9 @@ import (
 
 // rootCmd is the base command
 var rootCmd = &cobra.Command{
-	Use:   "identity",
-	Short: "Identity management CLI",
-	Long:  `A CLI tool to generate, load, and fetch Ed25519 identities.`,
+	Use:   "git-id",
+	Short: "Git ID management CLI",
+	Long:  `A CLI tool to generate, load, and fetch Ed25519 Git IDs.`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

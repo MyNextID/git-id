@@ -15,7 +15,7 @@
 ## Installation
 
 ```bash
-go install github.com/mynextid/gid/cmd/gid@latest
+go install github.com/mynextid/git-id/cmd/gid@latest
 ```
 
 Or clone manually:
