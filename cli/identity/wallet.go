@@ -76,6 +76,11 @@ func GenerateIdentity(path string, force bool) (*Identity, error) {
 		return nil, fmt.Errorf("failed to stat public key path %q: %w", publicKeyPath, err)
 	}
 
+	// Ensure parent directory exists
+	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
+		return nil, fmt.Errorf("failed to create parent directory for %q: %w", path, err)
+	}
+
 	// Generate key pair
 	pub, priv, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {

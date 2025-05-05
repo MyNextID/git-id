@@ -15,13 +15,13 @@
 ## Installation
 
 ```bash
-go install github.com/mynextid/git-id/cmd/gid@latest
+go install github.com/mynextid/git-id/cli@latest
 ```
 
 Or clone manually:
 
 ```bash
-git clone https://github.com/mynextid/gid.git
+git clone https://github.com/mynextid/git-id.git
 cd cli
 go build
 ```
@@ -29,7 +29,7 @@ go build
 ## Usage
 
 ```bash
-gid [command] [flags]
+git-id [command] [flags]
 ```
 
 Available commands:
@@ -43,18 +43,18 @@ Available commands:
 ### Generate an Identity
 
 ```bash
-gid generate ./keys/identity.pem
+git-id generate ./keys/identity.pem
 ```
 
 This will:
 
 - Create a new Ed25519 private key at `./keys/identity.pem`
-- Save the corresponding public key at `./keys/gid.pem`
+- Save the corresponding public key at `./keys/git-id.pem`
 
 ### Load an Identity
 
 ```bash
-gid load ./keys/identity.pem
+git-id load ./keys/identity.pem
 ```
 
 Outputs the **public key** from your saved identity.
@@ -62,7 +62,7 @@ Outputs the **public key** from your saved identity.
 ### Fetch a Public Key from GitHub
 
 ```bash
-gid fetch user
+git-id fetch user
 ```
 
 Fetches and displays the public key from a GitHub repo, branch, and file path.
@@ -70,7 +70,7 @@ Fetches and displays the public key from a GitHub repo, branch, and file path.
 Example:
 
 ```bash
-gid fetch mynextid
+git-id fetch mynextid
 ```
 
 ## Security Notes
@@ -96,7 +96,7 @@ go mod tidy
 go build
 
 # Run CLI directly
-go run ./gid generate ./mykeys/id.pem
+go run ./git-id generate ./mykeys/id.pem
 ```
 
 ## License
