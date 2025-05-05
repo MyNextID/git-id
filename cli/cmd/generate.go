@@ -7,13 +7,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var overwrite bool
+
 var generateCmd = &cobra.Command{
 	Use:   "generate [path]",
 	Short: "Generate a new identity at the specified path",
-	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		path := args[0]
-		id, err := identity.GenerateIdentity(path)
+		path := "secret-key.pem"
+		if len(args) > 0 {
+			path = args[0]
+
+		}
+		id, err := identity.GenerateIdentity(path, overwrite)
 		if err != nil {
 			fmt.Printf("Error generating identity: %v\n", err)
 			return
@@ -24,4 +29,6 @@ var generateCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
+	generateCmd.Flags().BoolVarP(&overwrite, "force", "f", false, "Overwrite existing key files if they exist")
+
 }

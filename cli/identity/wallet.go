@@ -28,7 +28,7 @@ func LoadOrCreate(idPath string) (*Identity, error) {
 	}
 	if os.IsNotExist(err) {
 		fmt.Printf("Generating new identity at %s\n", idPath)
-		return GenerateIdentity(idPath)
+		return GenerateIdentity(idPath, false)
 	}
 	return nil, err
 }
@@ -50,36 +50,58 @@ func ReadIdentity(path string) (*Identity, error) {
 	}, nil
 }
 
-// GenerateIdentity creates a new Ed25519 identity and saves it to disk.
-func GenerateIdentity(path string) (*Identity, error) {
+// GenerateIdentity creates a new Ed25519 identity and saves it locally.
+// If force is true, it will overwrite existing files.
+func GenerateIdentity(path string, force bool) (*Identity, error) {
+	// Check private key file
+	if info, err := os.Stat(path); err == nil {
+		if info.IsDir() {
+			return nil, fmt.Errorf("path %q is a directory, not a file", path)
+		}
+		if !force {
+			return nil, fmt.Errorf("file %q already exists", path)
+		}
+	} else if !os.IsNotExist(err) {
+		return nil, fmt.Errorf("failed to stat path %q: %w", path, err)
+	}
+
+	publicKeyPath := filepath.Join(filepath.Dir(path), "gid.pem")
+
+	// Check public key file
+	if info, err := os.Stat(publicKeyPath); err == nil && !info.IsDir() {
+		if !force {
+			return nil, fmt.Errorf("public key file %q already exists", publicKeyPath)
+		}
+	} else if err != nil && !os.IsNotExist(err) {
+		return nil, fmt.Errorf("failed to stat public key path %q: %w", publicKeyPath, err)
+	}
+
+	// Generate key pair
 	pub, priv, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate key pair: %w", err)
 	}
 
-	// Marshal private key into PEM
+	// Marshal and write private key
 	privBytes, err := x509.MarshalPKCS8PrivateKey(priv)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal private key: %w", err)
 	}
 	privPem := pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: privBytes})
 
-	err = os.WriteFile(path, privPem, 0600)
-	if err != nil {
-		return nil, fmt.Errorf("failed to write private key to file: %w", err)
+	if err := os.WriteFile(path, privPem, 0600); err != nil {
+		return nil, fmt.Errorf("failed to write private key to %q: %w", path, err)
 	}
 
-	// Marshal public key into PEM (optional, stored separately if desired)
+	// Marshal and write public key
 	pubBytes, err := x509.MarshalPKIXPublicKey(pub)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal public key: %w", err)
 	}
 	pubPem := pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: pubBytes})
 
-	publicKeyPath := filepath.Join(filepath.Dir(path), "gid.pem")
-	err = os.WriteFile(publicKeyPath, pubPem, 0600)
-	if err != nil {
-		return nil, fmt.Errorf("failed to write public key file: %w", err)
+	if err := os.WriteFile(publicKeyPath, pubPem, 0600); err != nil {
+		return nil, fmt.Errorf("failed to write public key to %q: %w", publicKeyPath, err)
 	}
 
 	return &Identity{
