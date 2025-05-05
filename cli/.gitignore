@@ -29,3 +29,5 @@ go.work.sum
 
 gid
 git-id
+
+.DS_Store

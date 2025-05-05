@@ -14,17 +14,23 @@
 
 ## Installation
 
+**Option 1: Install via go install**
+
 ```bash
-go install github.com/mynextid/git-id/cli@latest
+go install github.com/mynextid/gid/cmd/gid@latest
 ```
 
-Or clone manually:
+This will install the gid CLI tool into your Go bin directory.
+
+**Option 2: Clone and Build Manually**
 
 ```bash
-git clone https://github.com/mynextid/git-id.git
-cd cli
+git clone https://github.com/mynextid/gid.git
+cd gid/cli
 go build
 ```
+
+This will build the binary from source inside the cli directory.
 
 ## Usage
 
