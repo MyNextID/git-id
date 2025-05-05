@@ -22,7 +22,12 @@ var fetchCmd = &cobra.Command{
 			fmt.Printf("Error fetching public key: %v\n", err)
 			return
 		}
-		fmt.Printf("Fetched public key: %x\n", pubKey)
+		pubPEM, err := formatPublicKeyPEM(pubKey)
+		if err != nil {
+			fmt.Printf("Error formatting public key: %v\n", err)
+			return
+		}
+		fmt.Printf("Loaded identity.\n \n %s \n", pubPEM)
 	},
 }
 
