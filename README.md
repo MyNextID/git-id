@@ -91,7 +91,7 @@ Successful verification confirms that the user controlled the GitHub account whe
 ## Privacy Considerations
 
 - **Public Identity Binding:**  
-  Git ID publicly binds a cryptographic public key to your GitHub username. This link may will expose your identity across platforms that use your key.
+  Git ID publicly binds a cryptographic public key to your GitHub username. This link may expose your identity across platforms that use your key.
 - **Metadata Leakage:**  
   Verifiers or observers can correlate activities tied to your Git ID key to analyze your network, behaviour, or affiliations.
 
